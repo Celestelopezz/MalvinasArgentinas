@@ -1,0 +1,38 @@
+font-family: 'Roboto', sans-serif;
+
+header {
+    color: transparent;
+}
+
+main {
+    background-color: white;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+/* noticias */
+.grid-nav {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 25% 75%;
+    grid-gap: 5px;
+    padding: 6px;
+}
+
+.grid-noticias {
+    display: grid;
+    width: 90%;
+    grid-template-columns: 30% 30% 30%;
+    padding: 15px;
+    text-align: center;
+    grid-column-gap: 15px;
+}
+/*  fin noticias */
+
+/* menu */
+
+/* Fin Menu */
