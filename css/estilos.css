@@ -1,17 +1,36 @@
-font-family: 'Roboto', sans-serif;
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: sans-serif;
+}
 
 header {
-    color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color:gray;
+    opacity: 90%;
+}
+
+.logo {
+    max-width: 10rem;
+    
 }
 
 main {
     background-color: white;
 }
 
+.nota-img {
+    max-width: 90%;
+}
 footer {
     background-color: black;
     color: white;
     text-align: center;
+    opacity: 80%;
 }
 
 /* noticias */
@@ -31,8 +50,89 @@ footer {
     text-align: center;
     grid-column-gap: 15px;
 }
+.nota1  {
+    max-width: fit-content;
+}
 /*  fin noticias */
 
 /* menu */
 
+.abrir-menu, .cerrar-menu {
+    display: none;
+}
+
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-list li a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.abrir-menu,
+.cerrar-menu {
+    display: none;
+}
 /* Fin Menu */
+
+/* Responsive */
+@media screen and (max-width: 650px) {
+    /* Noticias */
+    .grid-noticias {
+
+        grid-template-columns: 50% 50%;
+
+    }
+  /* Menu */
+    .abrir-menu,
+    .cerrar-menu {
+        display: block;
+        border: 0;
+
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .abrir-menu {
+        color: #1c1c1c;
+        font-size: 3rem;
+    }
+
+    .cerrar-menu {
+        color: #ececec;
+    }
+
+    .nav {
+        opacity: 0;
+        visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 1rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #1c1c1c;
+        padding: 2rem;
+        box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
+    }
+
+    .nav.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-list {
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .nav-list li a {
+        color: #ecececec;
+    }
+    /* Fin Menu */
+}
