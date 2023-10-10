@@ -39,12 +39,12 @@
 
     <main>
       <h2>Formulario de Contacto</h2>
-      <form action="">
-        <fieldset>
-          <legend>Datos Personales</legend>
+      <form action="" class="container-md">
+        <legend>Datos Personales</legend>
+        <div class="row">
 
           <!-- Nombre -->
-          <div class="mb-3">
+          <div class="mb-3 col-12 col-md-6">
             <label for="nombre" class="form-label">Nombre: </label>
             <input
               class="form-control"
@@ -55,34 +55,48 @@
               required
             />
           </div>
+          <!-- apellido -->
+          <div class="mb-3 col-12 col-md-6">
+            <label for="apellido" class="form-label">Apellido: </label>
+            <input
+              class="form-control"
+              type="text"
+              name="apellido"
+              id="apellido"
+              placeholder="Ingrese su apellido..."
+              required
+            />
+          </div>
           <!-- mail -->
-          <div class="mb-3">
+          <div class="mb-3 col-12">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" />
           </div>
           <!-- telefono -->
-          <div class="mb-3">
+          <div class="mb-3 col-12">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="tel" class="form-control" id="telefono" />
           </div>
 
           <!-- Asunto -->
-          <div class="mb-3">
+          <div class="mb-3 col-12">
             <label for="asunto" class="form-label">Asunto</label>
             <input type="text" class="form-control" id="asunto" />
           </div>
 
           <!-- Comentarios -->
-          <div class="mb-3">
+          <div class="mb-3 col-12">
             <label for="comentario" class="form-label"
               >Deje aquí sus comentarios:
             </label>
             <textarea class="form-control" id="comentario" rows="5"></textarea>
           </div>
-        </fieldset>
 
-        <!-- Botones -->
-        <button type="submit" class="btn btn-primary">Enviar Formulario</button>
+          <!-- Botones -->
+          <button type="submit" class="btn btn-primary">
+            Enviar Formulario
+          </button>
+        </div>
       </form>
     </main>
 
