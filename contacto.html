@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="icon" href="./img/ico.ico" />
+    <link rel="stylesheet" href="./css/estilos.css" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <title>Instituto Malvinas Argentinas - Contacto</title>
+  </head>
+  <body background="./img/fondo.png">
+    <header>
+      <img class="logo" src="./img/ico.ico" alt="Logo" />
+      <button id="abrir" class="abrir-menu"><i class="bi bi-list"></i></button>
+      <nav class="nav" id="nav">
+        <button class="cerrar-menu" id="cerrar">
+          <i class="bi bi-x-lg"></i>
+        </button>
+        <ul class="nav-list">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Quiénes somos</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Qué hacemos</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Formulario de Contacto</h2>
+      <form action="">
+        <fieldset>
+          <legend>Datos Personales</legend>
+
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre: </label>
+            <input
+              class="form-control"
+              type="text"
+              name="nombre"
+              id="nombre"
+              placeholder="Ingrese su nombre..."
+              required
+            />
+          </div>
+          <!-- mail -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" />
+          </div>
+          <!-- telefono -->
+          <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" id="telefono" />
+          </div>
+
+          <!-- Asunto -->
+          <div class="mb-3">
+            <label for="asunto" class="form-label">Asunto</label>
+            <input type="text" class="form-control" id="asunto" />
+          </div>
+
+          <!-- Comentarios -->
+          <div class="mb-3">
+            <label for="comentario" class="form-label"
+              >Deje aquí sus comentarios:
+            </label>
+            <textarea class="form-control" id="comentario" rows="5"></textarea>
+          </div>
+        </fieldset>
+
+        <!-- Botones -->
+        <button type="submit" class="btn btn-primary">Enviar Formulario</button>
+      </form>
+    </main>
+
+    <footer>
+      <br />
+      ICONOS DE REDES SOCIALES
+      <br /><br />
+      Codo a Codo comision nº 23521, Grupo Nº 7
+      <br />
+      Derechos reservados - 2023
+    </footer>
+    <script src="./js/scripts.js"></script>
+  </body>
+</html>
