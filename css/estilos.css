@@ -9,6 +9,7 @@ body {
     background: url(/img/fondo.png);
 ;
 }
+
 header {
     display: flex;
     align-items:baseline;
@@ -30,9 +31,11 @@ main {
 main p, h1, h2 {
     text-align: center;
 }
+
 .nota-img {
     max-width: 90%;
 }
+
 footer {
     background-color: black;
     color: white;
