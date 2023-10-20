@@ -185,7 +185,7 @@ footer {
         opacity: 1;
         visibility: visible;
     }
-    
+
     .nav-list {
         flex-direction: column;
         align-items: end;
@@ -202,15 +202,15 @@ footer {
     margin: 0;
     padding: 0;
   } */
-  
+
    /* h2 {
     font-family: 'Times New Roman', serif;
     color: royalblue;
    }
-  
+
   p {
     font-family: 'Roboto', sans-serif;
-    color: black ; 
+    color: black ;
   }
    */
 .talleres-grid {
@@ -220,7 +220,7 @@ footer {
     gap: 20px;
     padding: 20px;
 }
-  
+
 .taller {
     background-color: #d7d9dd;
     padding: 20px;
@@ -236,18 +236,17 @@ footer {
     text-align: justify;
 }
  /* imagenes del contenedor */
-.taller img { 
-    width: 100%; 
+.taller img {
+    width: 100%;
     height: auto;
     object-fit: cover;
 }
   /* barra de desplazamiento */
 .scroll-container {
     max-height: 200px;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
-  
+
 /* slide imagenes  */
-  
-  
-  
+
+
