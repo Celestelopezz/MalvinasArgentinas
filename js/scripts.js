@@ -12,6 +12,7 @@ cerrar.addEventListener("click", () => {
 })
 //FIN Menu
 
+//Mapa
 function initMap() {
     var geocoder = new google.maps.Geocoder();
     var direccion = "DMF, Av. 12 de Octubre 1168, B1828 Villa Centenario, Provincia de Buenos Aires";
@@ -32,3 +33,4 @@ function initMap() {
       }
     });
   }
+  //FIN Mapa
