@@ -54,7 +54,7 @@ footer {
     display: grid;
     width: 100%;
     grid-template-columns: 25% 75%;
-    padding: 6
+    padding: 6;
     color: black;
 }
 
@@ -116,6 +116,10 @@ footer {
 .nota h5 {
     text-align: center;
 }
+
+.nota-img {
+    max-width: 350px;
+}
 /* FIN Mainpage */
 
 /* CONTACTO */
@@ -126,6 +130,15 @@ footer {
 /* FIN CONTACTO */
 
 /* Responsive */
+@media screen and (max-width: 980px) {
+    /* Mainpage */
+    .grid-noticias {
+        grid-template-columns: 99%;
+        
+    }
+    /* FIN Mainpage */
+}
+
 @media screen and (max-width: 650px) {
 
     /* Mainpage */
