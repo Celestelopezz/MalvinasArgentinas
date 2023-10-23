@@ -217,7 +217,7 @@ footer {
 .taller {
 
     background-color: #ffffff;
-    border: 5px solid rgb(52, 69, 143);
+    border: 5px solid rgb(52, 69, 143); border-radius: 20px;
     padding: 40px;
     text-align: center;
     width: 600px;
