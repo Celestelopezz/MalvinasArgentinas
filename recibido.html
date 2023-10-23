@@ -37,51 +37,46 @@
         </button>
         <ul class="nav-list">
           <li><a class="menu-item" href="index.html">Inicio</a></li>
-          <li><a class="menu-item" href="nosotros.html">Nosotros</a></li>
+
           <li><a class="menu-item" href="talleres.html">Talleres</a></li>
           <li><a class="menu-item" href="contacto.html">Contacto</a></li>
           <li><a class="menu-item" href="maps.html">Donde estamos</a></li>
         </ul>
       </nav>
     </header>
-    <main>
-      <div class="col-6 col-s-9">
+    <main class="py-3" style="min-height: 20rem;">
+
         <div align="center">
-          <p align="center">&nbsp;</p>
-          <h1 align="center">
+          <h1 align="center" class="pb-3">
             <font size="+1"
               >Gracias por contactarnos, su mensaje ya ha sido enviado</font
             >
           </h1>
-          <div>
-            <table border="10" align="center" width="226">
-              <script language="javascript">
-                var args = location.search.substr(1).split("&");
-                console.log(location.search.substr(1).split("&"));
-                for (var i = 0; i < args.length - 1; ++i) {
-                  var parts = args[i].split("=");
-                  if (parts != null) {
-                    var field = parts[0];
-                    var value = parts[1];
-                    if (value == null) {
-                      value = "null";
-                    } else {
-                      value = unescape(value.replace(/["+]/g, " "));
-                    }
-                    document.writeln(
-                      '<tr><td align="center">' + field + "</td>"
-                    );
-                    document.writeln(
-                      '<td align="center">' + value + "</td></tr>"
-                    );
+
+          <table border="10" align="center" width="226">
+            <script language="javascript">
+              var args = location.search.substr(1).split("&");
+              console.log(location.search.substr(1).split("&"));
+              for (var i = 0; i < args.length - 1; ++i) {
+                var parts = args[i].split("=");
+                if (parts != null) {
+                  var field = parts[0];
+                  var value = parts[1];
+                  if (value == null) {
+                    value = "null";
+                  } else {
+                    value = unescape(value.replace(/["+]/g, " "));
                   }
+                  document.writeln('<tr><td align="center">' + "&nbsp&nbsp&nbsp&nbsp"+field + "</td>");
+                  document.writeln(
+                    '<td align="center">' + value + "&nbsp&nbsp&nbsp&nbsp" + "</td></tr>"
+                  );
                 }
-              </script>
-            </table>
-          </div>
+              }
+            </script>
+          </table>
         </div>
-        <p align="center">&nbsp;</p>
-      </div>
+
     </main>
     <footer>
       <br /><br />
