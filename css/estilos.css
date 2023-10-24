@@ -1,3 +1,4 @@
+/* GENERAL */
 * {
     margin: 0;
     padding: 0;
@@ -5,9 +6,12 @@
     font-family: sans-serif;
 }
 
+.encabezado1 {
+    background-color: #d7d9dd;
+}
+
 body {
     background: url(/img/fondo.jpg);
-    ;
 }
 
 header {
@@ -25,20 +29,6 @@ header {
     box-shadow: 0px 1px 6px black;
 }
 
-main {
-    background-color: whitesmoke;
-}
-
-main p,
-h1,
-h2 {
-    text-align: center;
-}
-
-.nota-img {
-    max-width: 90%;
-}
-
 footer {
     background-color: black;
     color: white;
@@ -52,7 +42,7 @@ footer {
     padding: 10px;
 }
 
-.grid-nav {
+.grid-nav, .grid-intro {
     display: grid;
     width: 100%;
     grid-template-columns: 25% 75%;
@@ -60,17 +50,26 @@ footer {
     color: black;
 }
 
+.nota, .container, .taller, .intro, .ubicacion {
+    background-color: #d7d9dd;
+    box-shadow: 0px 1px 6px black;
+    padding: 20px;
+    border-radius: 5px;
+    width: 95%;
+}
 
+.intro {
+    background-color: grey !important;
+    color: whitesmoke;
+}
 /* menu */
 .menu-item {
     font-family: 'Rubik', sans-serif;
     font-weight: 700;
     padding: 5px;
-    /* box-shadow: 0px 1px 6px black; */
 }
 
-.abrir-menu,
-.cerrar-menu {
+.abrir-menu, .cerrar-menu {
     display: none;
 }
 
@@ -85,17 +84,23 @@ footer {
     color: whitesmoke;
     transition-property: box-shadow;
     transition-property: background-color;
-    transition-duration: 1s;
+    transition-duration: 2s;
 }
 
 .nav-list li a:hover {
     background-color: grey;
     box-shadow: 0px 1px 6px black;
 }
+/* FIN MENU */
 
-/* Fin Menu */
 
-/* Mainpage */
+
+
+/* MAINPAGE */
+.intro img {
+    width: 98%;
+    max-width: 500px;
+}
 .grid-noticias {
     display: grid;
     width: 99%;
@@ -108,53 +113,48 @@ footer {
 .nota {
     width: 98%;
     padding: 20px;
-    background-color: #d7d9dd;
-    box-shadow: 0px 1px 6px black;
+    margin-bottom: 1rem;
+    border-radius: 5px;
 }
 
-.nota p {
-    text-align: justify;
+
+.nota h5, .nota p {
+    text-align: center;
+
 }
 
-.nota h5 {
+main {
     text-align: center;
 }
 
 .nota-img {
-    max-width: 350px;
+    max-width: 90%;
 }
-
 /* FIN Mainpage */
 
+
+
 /* CONTACTO */
-.container {
-    background-color: #d7d9dd;
-    box-shadow: 0px 1px 6px black;
-}
 
 /* FIN CONTACTO */
 
-/* Responsive */
-@media screen and (max-width: 980px) {
 
+
+/* RESPONSIVE */
+@media screen and (max-width: 980px) {
     /* Mainpage */
     .grid-noticias {
         grid-template-columns: 99%;
-
     }
-
     /* FIN Mainpage */
 }
 
 @media screen and (max-width: 650px) {
-
     /* Mainpage */
     .grid-noticias {
         grid-template-columns: 99%;
     }
-
     /* FIN Mainpage */
-
     /* Menu */
     .abrir-menu,
     .cerrar-menu {
@@ -163,16 +163,13 @@ footer {
         background-color: transparent;
         cursor: pointer;
     }
-
     .abrir-menu {
         color: #1c1c1c;
         font-size: 3rem;
     }
-
     .cerrar-menu {
         color: #ececec;
     }
-
     .nav {
         opacity: 0;
         visibility: hidden;
@@ -188,42 +185,37 @@ footer {
         padding: 2rem;
         box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .5);
     }
-
     .nav.visible {
         opacity: 1;
         visibility: visible;
     }
-
     .nav-list {
         flex-direction: column;
         align-items: end;
     }
-
     .nav-list li a {
         color: #ecececec;
     }
-
     /* FIN Menu */
 }
+/* FIN  RESPONSIVE */
 
 
+
+/* TALLERES */
 .talleres-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 10px 0;
+    /* align-items: center; */
+
 }
 
 .taller {
-
-    background-color: #ffffff;
-    border: 5px solid rgb(52, 69, 143); border-radius: 20px;
+    border-radius: 5px;
     padding: 40px;
     text-align: center;
-    width: 600px;
-    margin: 0 10px;
-
-
+    max-width: 500px;
+    margin: 10px;
 }
 
 .slider {
@@ -246,7 +238,6 @@ footer {
 .slide img {
     width: 100%;
     height: 90%;
-
 }
 
 .navigation {
@@ -335,18 +326,21 @@ input[type="radio"] {
 #slide16:checked~.slides {
     transform: translateX(-300%);
 }
+/* FIN TALLERES */
 
 
 
-/* MAPA */
-.gmp.map {
-    width: 90%;
+/* MAPS */
+.gmp-map {
+    height: 300px;
+    width: 400px;
 }
+.ubicacion {
+    
+}
+.ubicacion-texto, .ubicacion-imagen, .ubicacion-mapa {
+    padding: 10px;
 
+}
+/* FIN MAPS */
 
-/* 
---- NO ENCONTRE EL ID ---
-#gmp-map {
-    height: 100%;
-  }
-   */
