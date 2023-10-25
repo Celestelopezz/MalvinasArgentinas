@@ -34,3 +34,5 @@ function initMap() {
     });
   }
   //FIN Mapa
+
+  //FORMULARIO
