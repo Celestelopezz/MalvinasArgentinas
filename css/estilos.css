@@ -6,6 +6,10 @@
     font-family: sans-serif;
 }
 
+.encabezado1 {
+    background-color: #d7d9dd;
+}
+
 body {
     background: url(/img/fondo.jpg);
 }
@@ -46,7 +50,19 @@ footer {
     color: black;
 }
 
+.nota, .container, .taller, .intro, .ubicacion {
+    background-color: #d7d9dd;
+    box-shadow: 0px 1px 6px black;
+    padding: 20px;
+    border-radius: 5px;
+    width: 95%;
+}
 
+.intro {
+    background-color: grey !important;
+    color: whitesmoke;
+    
+}
 /* menu */
 .menu-item {
     font-family: 'Rubik', sans-serif;
@@ -315,15 +331,14 @@ input[type="radio"] {
 
 
 
-/* MAPA */
-.gmp.map {
-    width: 90%;
+/* MAPS */
+.gmp-map {
+    height: 300px;
+    width: 400px;
 }
 
+.ubicacion-texto, .ubicacion-imagen, .ubicacion-mapa {
+    padding: 10px;
 
-/* 
---- NO ENCONTRE EL ID ---
-#gmp-map {
-    height: 100%;
-  }
-   */
+}
+/* FIN MAPS */
