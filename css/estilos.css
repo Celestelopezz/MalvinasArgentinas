@@ -61,6 +61,7 @@ footer {
 .intro {
     background-color: grey !important;
     color: whitesmoke;
+    
 }
 /* menu */
 .menu-item {
@@ -335,9 +336,7 @@ input[type="radio"] {
     height: 300px;
     width: 400px;
 }
-.ubicacion {
-    
-}
+
 .ubicacion-texto, .ubicacion-imagen, .ubicacion-mapa {
     padding: 10px;
 
