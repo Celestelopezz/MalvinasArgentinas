@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Producto</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <h1>Modificar Productos del Inventario</h1>
+    <h3>Codo a Codo 2023</h3>
+    <div id="app">
+        <form @submit.prevent="obtenerProducto">
+            <label for="codigo">Código:</label>
+            <input type="text" v-model="codigo" required><br>
+            <button type="submit">Modificar Producto</button> <a href="index.html">Menu principal</a>
+        </form>
+
+        <div v-if="mostrarDatosProducto">
+            <h2>Datos del Producto</h2>
+            <form @submit.prevent="guardarCambios">
+                <label for="descripcionModificar">Descripción:</label>
+                <input type="text" id="descripcionModificar" v-model="descripcion" required><br>
+
+                <label for="cantidadModificar">Cantidad:</label>
+                <input type="number" id="cantidadModificar" v-model="cantidad" required><br>
+
+                <label for="precioModificar">Precio:</label>
+                <input type="number" step="0.01" id="precioModificar" v-model="precio" required><br>
+
+                <!-- Miniatura de la imagen -->
+                <div>
+                    <label>Imagen Actual:</label>
+                    <img v-if="imagen_url && !imagenUrlTemp" :src="imagenTEMP" alt="Imagen del producto"
+                        style="max-width: 200px;">
+                    <img v-if="imagenUrlTemp" :src="imagenUrlTemp" alt="Nueva imagen del producto"
+                        style="max-width: 200px;">
+                </div>
+
+                <!-- Input para nueva imagen -->
+                <label for="nuevaImagen">Nueva Imagen:</label>
+                <input type="file" id="nuevaImagen" @change="seleccionarImagen"><br>
+
+                <button type="submit">Guardar Cambios</button>
+                <a href="modificaciones.html">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const URL = "http://127.0.0.1:5000/"
+        //const URL = "https://arielcodo.pythonanywhere.com/";
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    codigo: '',
+                    mostrarDatosProducto: false,
+                    descripcion: '',
+                    cantidad: '',
+                    precio: '',
+                    proveedor: '',
+                    imagenSeleccionada: null, // Para almacenar el archivo de imagen seleccionado
+                    imagenUrlTemp: '', // URL temporal para la miniatura
+                    imagenTEMP:''
+                }
+            },
+            methods: {
+                seleccionarImagen(event) {
+                    this.imagenSeleccionada = event.target.files[0];
+                    if (this.imagenSeleccionada) {
+                        // Crear una URL temporal y actualizar la miniatura
+                        //this.imagenUrlTemp = URL.createObjectURL(this.imagenSeleccionada);
+                        this.imagenUrlTemp = window.URL.createObjectURL(this.imagenSeleccionada);
+                    }
+                },
+
+                obtenerProducto() {
+                    fetch(URL + 'productos/' + this.codigo)
+                        .then(response => {
+                            if (response.ok) {
+                                console.log("Respuesta del servidor:", response)
+                                return response.json();
+                            } else {
+                                throw new Error('Error al obtener los datos del producto.');
+                            }
+                        })
+                        .then(data => {
+                            this.descripcion = data.descripcion;
+                            this.cantidad = data.cantidad;
+                            this.precio = data.precio;
+                            this.imagen_url = data.imagen_url;
+                            this.imagenTEMP = "./imagenes/"+data.imagen_url;
+                            this.proveedor = data.proveedor;
+                            this.mostrarDatosProducto = true;
+                            console.log("Datos procesados:", data)
+                        })
+                        .catch(error => {
+
+                            alert('Error al obtener los datos del producto.');
+                        });
+                },
+                guardarCambios() {
+                    // Crear un objeto FormData
+                    const formData = new FormData();
+                    formData.append('codigo', this.codigo);
+                    formData.append('descripcion', this.descripcion);
+                    formData.append('cantidad', this.cantidad);
+                    formData.append('precio', this.precio);
+                    formData.append('proveedor', this.proveedor);
+                    if (this.imagenSeleccionada) {
+                        var nombreArchivo;
+                    
+                        // Verifica si imagenSeleccionada es un objeto File
+                        if (this.imagenSeleccionada instanceof File) {
+                            nombreArchivo = this.imagenSeleccionada.name;
+                        } else if (typeof this.imagenSeleccionada === 'string') {
+                            // Si es una cadena, usa split para obtener el nombre del archivo
+                            var partesRuta = this.imagenSeleccionada.split('/');
+                            if (partesRuta.length > 0) {
+                                nombreArchivo = partesRuta[partesRuta.length - 1];
+                            }
+                        }
+                    
+                        // Si nombreArchivo existe, agrégalo a formData
+                        if (nombreArchivo) {
+                            formData.append('imagen', nombreArchivo);
+                        }
+                    }
+
+                    // Envío de la solicitud
+                    fetch(URL + 'productos/' + this.codigo, {
+                        method: 'PUT',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Error al guardar los cambios del producto.');
+                            }
+                        })
+                        .then(data => {
+                            alert('Cambios guardados correctamente.');
+                            location.reload();
+                        })
+                        .catch(error => {
+                            console.log("Error capturado:", error)
+                            alert('Error al guardar los cambios del producto.');
+                        });
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
