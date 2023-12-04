@@ -46,7 +46,7 @@ footer {
     padding: 10px;
 }
 
-.nota, .container, .taller, .intro {
+.nota, .container, .taller, .intro, .biblioteca {
     background-color: #d7d9dd;
     box-shadow: 0px 1px 6px black;
     padding: 20px;
@@ -54,7 +54,7 @@ footer {
     width: 95%;
 }
 
-.intro {
+.intro, .biblioteca{
     background-color: grey !important;
     color: whitesmoke;
     margin: 0 auto;
@@ -354,3 +354,116 @@ input[type="radio"] {
     vertical-align: middle;
 }
 /* FIN MAPS */
+
+
+
+
+
+
+
+/* Estilos para todo el proyecto */
+.biblioteca {
+
+    
+    
+}
+
+.contenedor-centrado {
+    display:flex;
+    width: 100%;
+    justify-content: center;
+}
+
+/* p {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #f9f9f9;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+} */
+
+/* h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    color: #007bff;
+} */
+
+/* form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid lightslategray;
+    border-radius: 5px;
+} */
+
+/* table {
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid lightslategray;
+    border-radius: 5px;
+} */
+
+/* label {
+    display: block;
+    margin-bottom: 5px;
+} */
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button {
+    padding: 8px;
+    margin:4px;
+    background-color: #13c6fd;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0003cd;
+    box-shadow: 0px 1px 6px black;
+    color: white;
+}
+
+.contenedor-centrado a{
+    width: 200px;
+    padding: 8px;
+    margin:4px;
+    background-color: #13c6fd;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 85%;
+}
+
+.contenedor-centrado a:hover {
+    background-color: #0003cd;
+    box-shadow: 0px 1px 6px black;
+    color: white;
+}

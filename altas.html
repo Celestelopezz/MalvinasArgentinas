@@ -3,40 +3,83 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar producto</title>
-    <link rel="stylesheet" href="estilos.css">
+    <!-- fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Rubik:wght@300;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" href="img/logo polo.jpeg" />
+    <title>IMA - Bliblioteca Digital</title>
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 
 <body>
-    <h1>Agregar Productos al Inventario</h1>
-    <h3>Codo a Codo 2023</h3>
+    <header>
+        <img class="logo" src="img/logo polo.jpeg" alt="Logo" />
+        <button id="abrir-menu" class="abrir-menu"><i class="bi bi-list"></i></button>
+        <nav class="nav" id="nav">
+            <button class="cerrar-menu" id="cerrar-menu"><i class="bi bi-x-lg"></i></button>
+            <ul class="nav-list">
+                <li><a class="menu-item" href="index.html">Inicio</a></li>
+                <li><a class="menu-item" href="talleres.html">Talleres</a></li>
+                <li><a class="menu-item" href="contacto.html">Contacto</a></li>
+                <li><a class="menu-item" href="maps.html">Ubicación</a></li>
+                <li><a class="menu-item" href="biblioteca.html">Biblioteca</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <table>
+        <td class="contenedor-centrado">
+        <h1>Agregar Productos al Inventario</h1>
+        <h3>Codo a Codo 2023</h3>
+    </td>
+<td class="contenedor-centrado">
+        <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
+        <form id="formulario" enctype="multipart/form-data">
+            <label for="codigo">Código:</label>
+            <input type="text" id="codigo" name="codigo" required><br>
 
-    <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
-    <form id="formulario" enctype="multipart/form-data">
-        <label for="codigo">Código:</label>
-        <input type="text" id="codigo" name="codigo" required><br>
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" required><br>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required><br>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" required><br>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" name="cantidad" required><br>
+            <label for="precio">Precio:</label>
+            <input type="number" step="0.01" id="precio" name="precio" required><br>
 
-        <label for="precio">Precio:</label>
-        <input type="number" step="0.01" id="precio" name="precio" required><br>
+            <label for="imagenProducto">Imagen del producto:</label>
+            <input type="file" id="imagenProducto" name="imagen">
 
-        <label for="imagenProducto">Imagen del producto:</label>
-        <input type="file" id="imagenProducto" name="imagen">
+            <label for="proveedorProducto">Proveedor:</label>
+            <input type="text" id="proveedorProducto" name="proveedor">
 
-        <label for="proveedorProducto">Proveedor:</label>
-        <input type="text" id="proveedorProducto" name="proveedor">
-        
-        <button type="submit">Agregar Producto</button>
-        <a href="index.html">Menu principal</a>
-    </form>
-
+            <button type="submit">Agregar Producto</button>
+            <a href="index.html">Menu principal</a>
+        </form>
+    </td>
+    </table>
+    </main>
+    <footer>
+        <br><br>
+        <a href="https://www.facebook.com/poloeducativoldz" target="blank"><i class="bi bi-facebook"
+                id="social"></i></a>
+        <a href="https://www.instagram.com/poloeducativoldz" target="blank"><i class="bi bi-instagram"
+                id="social"></i></a>
+        <a href="https://api.whatsapp.com/send?phone=91160175773" target="blank"><i class="bi bi-whatsapp"
+                id="social"></i></a>
+        <a href="mailto:primariapolomalvinasargentinas@gmail.com">
+            <i class="bi bi-envelope" id="social"></i>
+        </a>
+        <br><br><br><br>
+        Codo a Codo comision nº 23521, Grupo Nº 7
+        <br>
+        Derechos reservados - 2023
+    </footer>
+    <script src="./js/scripts.js"></script>
     <script>
         const URL = "http://127.0.0.1:5000/"
 
@@ -51,7 +94,7 @@
             formData.append('precio', document.getElementById('precio').value);
             formData.append('imagen', document.getElementById('imagenProducto').files[0]);
             formData.append('proveedor', document.getElementById('proveedorProducto').value);
-            
+
             // Realizamos la solicitud POST al servidor
             fetch(URL + 'productos', {
                 method: 'POST',
@@ -60,8 +103,8 @@
 
                 //Después de realizar la solicitud POST, se utiliza el método then() para manejar la respuesta del servidor.
                 .then(function (response) {
-                    if (response.ok) { 
-                        return response.json(); 
+                    if (response.ok) {
+                        return response.json();
                     } else {
                         // Si hubo un error, lanzar explícitamente una excepción
                         // para ser "catcheada" más adelante
@@ -84,7 +127,7 @@
                     // Mostramos el error, y no limpiamos el form.
                     alert('Error al agregar el producto.');
                 });
-            
+
         })
     </script>
 </body>
