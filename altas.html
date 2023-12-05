@@ -31,37 +31,37 @@
         </nav>
     </header>
     <main>
-        <table>
-        <td class="contenedor-centrado">
-        <h1>Agregar Productos al Inventario</h1>
-        <h3>Codo a Codo 2023</h3>
-    </td>
-<td class="contenedor-centrado">
-        <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
-        <form id="formulario" enctype="multipart/form-data">
-            <label for="codigo">Código:</label>
-            <input type="text" id="codigo" name="codigo" required><br>
+        <br>
+        <div class="biblioteca">
+            <h1>Biblioteca Digital</h1>
+            <h3>Alta</h3>
+            <form id="formulario" enctype="multipart/form-data">
+                <label for="codigo">Código:</label>
+                <input type="text" id="codigo" name="codigo" required><br>
 
-            <label for="descripcion">Descripción:</label>
-            <input type="text" id="descripcion" name="descripcion" required><br>
+                <label for="titulo">Título:</label>
+                <input type="text" id="descripcion" name="descripcion" required><br>
 
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" required><br>
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" required><br>
 
-            <label for="precio">Precio:</label>
-            <input type="number" step="0.01" id="precio" name="precio" required><br>
+                <label for="precio">Precio:</label>
+                <input type="number" step="0.01" id="precio" name="precio" required><br>
 
-            <label for="imagenProducto">Imagen del producto:</label>
-            <input type="file" id="imagenProducto" name="imagen">
+                <label for="imagenProducto">Imagen del producto:</label>
+                <input type="file" id="imagenProducto" name="imagen">
 
-            <label for="proveedorProducto">Proveedor:</label>
-            <input type="text" id="proveedorProducto" name="proveedor">
+                <label for="proveedorProducto">Proveedor:</label>
+                <input type="text" id="proveedorProducto" name="proveedor">
 
-            <button type="submit">Agregar Producto</button>
-            <a href="index.html">Menu principal</a>
-        </form>
-    </td>
-    </table>
+                <button type="submit">Agregar Producto</button>
+
+            </form>
+            <div class="contenedor-centrado">
+                <a href="biblioteca.html">Menu principal</a>
+            </div>
+        </div>
+        <br>
     </main>
     <footer>
         <br><br>
@@ -108,13 +108,13 @@
                     } else {
                         // Si hubo un error, lanzar explícitamente una excepción
                         // para ser "catcheada" más adelante
-                        throw new Error('Error al agregar el producto.');
+                        throw new Error('Error al agregar libro.');
                     }
                 })
 
                 //Respuesta OK, se limpia formulario.
                 .then(function (data) {
-                    alert('Producto agregado correctamente.');
+                    alert('Libro agregado correctamente.');
                     // Limpiar el formulario para el proximo producto
                     document.getElementById('codigo').value = "";
                     document.getElementById('descripcion').value = "";
@@ -125,7 +125,7 @@
                 })
                 .catch(function (error) {
                     // Mostramos el error, y no limpiamos el form.
-                    alert('Error al agregar el producto.');
+                    alert('Error al agregar libro.');
                 });
 
         })
