@@ -5,35 +5,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar producto</title>
+    <title>Agregar libro</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
-    <h1>Agregar Productos al Inventario</h1>
+    <h1>Agregar Libros al Inventario</h1>
     <h3>Codo a Codo 2023</h3>
 
     <!--enctype="multipart/form-data" es necesario para enviar archivos al back.-->
     <form id="formulario" enctype="multipart/form-data">
         <label for="codigo">Código:</label>
-        <input type="text" id="codigo" name="codigo" required><br>
+        <input type="number" id="codigo" name="codigo" required><br>
 
-        <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required><br>
+        <label for="titulo">Titulo:</label>
+        <input type="text" id="titulo" name="titulo" required><br>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" name="cantidad" required><br>
+        <label for="autor">Autor</label>
+        <input type="text" id="autor" name="autor" required><br>
 
-        <label for="precio">Precio:</label>
-        <input type="number" step="0.01" id="precio" name="precio" required><br>
+        <label for="genero">Genero:</label>
+        <input type="genero" id="genero" name="genero" required><br>
 
         <label for="imagenProducto">Imagen del producto:</label>
         <input type="file" id="imagenProducto" name="imagen">
 
-        <label for="proveedorProducto">Proveedor:</label>
-        <input type="text" id="proveedorProducto" name="proveedor">
         
-        <button type="submit">Agregar Producto</button>
+        <button type="submit">Agregar libro</button>
         <a href="index.html">Menu principal</a>
     </form>
 
@@ -46,14 +44,13 @@
 
             var formData = new FormData();
             formData.append('codigo', document.getElementById('codigo').value);
-            formData.append('descripcion', document.getElementById('descripcion').value);
-            formData.append('cantidad', document.getElementById('cantidad').value);
-            formData.append('precio', document.getElementById('precio').value);
+            formData.append('titulo', document.getElementById('titulo').value);
+            formData.append('autor', document.getElementById('autor').value);
             formData.append('imagen', document.getElementById('imagenProducto').files[0]);
-            formData.append('proveedor', document.getElementById('proveedorProducto').value);
+            formData.append('genero', document.getElementById('genero').value);
             
             // Realizamos la solicitud POST al servidor
-            fetch(URL + 'productos', {
+            fetch(URL + 'libros', {
                 method: 'POST',
                 body: formData // Aquí enviamos formData en lugar de JSON
             })
@@ -65,24 +62,23 @@
                     } else {
                         // Si hubo un error, lanzar explícitamente una excepción
                         // para ser "catcheada" más adelante
-                        throw new Error('Error al agregar el producto.');
+                        throw new Error('Error al agregar el libro.');
                     }
                 })
 
                 //Respuesta OK, se limpia formulario.
                 .then(function (data) {
-                    alert('Producto agregado correctamente.');
+                    alert('libro agregado correctamente.');
                     // Limpiar el formulario para el proximo producto
                     document.getElementById('codigo').value = "";
-                    document.getElementById('descripcion').value = "";
-                    document.getElementById('cantidad').value = "";
-                    document.getElementById('precio').value = "";
+                    document.getElementById('titulo').value = "";
+                    document.getElementById('autor').value = "";
                     document.getElementById('imagen').value = "";
-                    document.getElementById('proveedor').value = "";
+                    document.getElementById('genero').value = "";
                 })
                 .catch(function (error) {
                     // Mostramos el error, y no limpiamos el form.
-                    alert('Error al agregar el producto.');
+                    alert('Error al agregar el libro.');
                 });
             
         })
