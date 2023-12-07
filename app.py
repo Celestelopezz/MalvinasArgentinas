@@ -1,18 +1,15 @@
-#--------------------------------------------------------------------
 # Instalar con pip install Flask
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import mysql.connector
 from werkzeug.utils import secure_filename
 import os
 import time
-#--------------------------------------------------------------------
 
 app = Flask(__name__)
-CORS(app)  # Esto habilitará CORS para todas las rutas
+CORS(app)
 
-#--------------------------------------------------------------------
-class Biblioteca:
+class BibliotecaLibros:  # Cambié el nombre de la clase a BibliotecaLibros
     def __init__(self, host, user, password, database):
         self.conn = mysql.connector.connect(
             host=host,
@@ -35,21 +32,24 @@ class Biblioteca:
             titulo VARCHAR(255) NOT NULL,
             autor VARCHAR(255) NOT NULL,
             cantidad INT NOT NULL,
+            titulo VARCHAR(255) NOT NULL,
+            autor VARCHAR(255) NOT NULL,
+            editorial VARCHAR(255) NOT NULL,
             imagen_url VARCHAR(255),
-            genero VARCHAR(50) NOT NULL)''')
+            enlace VARCHAR(255))''')
         self.conn.commit()
 
         self.cursor.close()
         self.cursor = self.conn.cursor(dictionary=True)
 
-    def agregar_libro(self, codigo, titulo, autor, cantidad, imagen, genero):
+    def agregar_libro(self, codigo, titulo, autor, editorial, imagen, enlace):
         self.cursor.execute(f"SELECT * FROM libros WHERE codigo = {codigo}")
         libro_existe = self.cursor.fetchone()
         if libro_existe:
             return False
 
-        sql = "INSERT INTO libros (codigo, titulo, autor, cantidad, imagen_url, genero) VALUES (%s, %s, %s, %s, %s)"
-        valores = (codigo, titulo, autor, cantidad, imagen, genero)
+        sql = "INSERT INTO libros (codigo, titulo, autor, editorial, imagen_url, enlace) VALUES (%s, %s, %s, %s, %s, %s)"
+        valores = (codigo, titulo, autor, editorial, imagen, enlace)
 
         self.cursor.execute(sql, valores)
         self.conn.commit()
@@ -59,9 +59,9 @@ class Biblioteca:
         self.cursor.execute(f"SELECT * FROM libros WHERE codigo = {codigo}")
         return self.cursor.fetchone()
 
-    def modificar_libro(self, codigo, nuevo_titulo, nuevo_autor, nueva_cantidad, nueva_imagen, nuevo_genero):
-        sql = "UPDATE libros SET titulo = %s, autor = %s, cantidad = %s, imagen_url = %s, genero = %s WHERE codigo = %s"
-        valores = (nuevo_titulo, nuevo_autor, nueva_cantidad, nueva_imagen, nuevo_genero, codigo)
+    def modificar_libro(self, codigo, nuevo_titulo, nuevo_autor, nueva_editorial, nueva_imagen, nuevo_enlace):
+        sql = "UPDATE libros SET titulo = %s, autor = %s, editorial = %s, imagen_url = %s, enlace = %s WHERE codigo = %s"
+        valores = (nuevo_titulo, nuevo_autor, nueva_editorial, nueva_imagen, nuevo_enlace, codigo)
         self.cursor.execute(sql, valores)
         self.conn.commit()
         return self.cursor.rowcount > 0
@@ -83,29 +83,24 @@ class Biblioteca:
             print(f"Código.....: {libro['codigo']}")
             print(f"Título.....: {libro['titulo']}")
             print(f"Autor......: {libro['autor']}")
-            print(f"Cantidad...: {libro['cantidad']}")
+            print(f"Editorial..: {libro['editorial']}")
             print(f"Imagen.....: {libro['imagen_url']}")
-            print(f"Género.....: {libro['genero']}")
+            print(f"Enlace.....: {libro['enlace']}")
             print("-" * 40)
         else:
             print("Libro no encontrado.")
 
 
-#--------------------------------------------------------------------
-# Cuerpo del programa
-#--------------------------------------------------------------------
-biblioteca = Biblioteca(host='localhost', user='root', password='root', database='miapp')
+biblioteca = BibliotecaLibros(host='localhost', user='root', password='root', database='miapp')
 
 RUTA_DESTINO = './static/imagenes/'
 
-#--------------------------------------------------------------------
 @app.route("/libros", methods=["GET"])
 def listar_libros():
     libros = biblioteca.listar_libros()
     return jsonify(libros)
 
 
-#--------------------------------------------------------------------
 @app.route("/libros/<int:codigo>", methods=["GET"])
 def mostrar_libro(codigo):
     libro = biblioteca.consultar_libro(codigo)
@@ -115,42 +110,40 @@ def mostrar_libro(codigo):
         return "Libro no encontrado", 404
 
 
-#--------------------------------------------------------------------
 @app.route("/libros", methods=["POST"])
 def agregar_libro():
     codigo = request.form['codigo']
     titulo = request.form['titulo']
     autor = request.form['autor']
-    cantidad = request.form['cantidad']
+    editorial = request.form['editorial']
     imagen = request.files['imagen']
-    genero = request.form['genero']
-    nombre_imagen = ""
+    enlace = request.form['enlace']
+    nombre_imagen=""
 
     libro = biblioteca.consultar_libro(codigo)
     if not libro:
         nombre_imagen = secure_filename(imagen.filename)
         nombre_base, extension = os.path.splitext(nombre_imagen)
         nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
-
-        if biblioteca.agregar_libro(codigo, titulo, autor, cantidad, nombre_imagen, genero):
+        
+        if  biblioteca.agregar_libro(codigo, titulo, autor, editorial, nombre_imagen, enlace):
             imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
             return jsonify({"mensaje": "Libro agregado correctamente.", "imagen": nombre_imagen}), 201
         else:
             return jsonify({"mensaje": "Error al agregar el libro."}), 500
     else:
         return jsonify({"mensaje": "Libro ya existe."}), 400
+    
 
-
-#--------------------------------------------------------------------
 @app.route("/libros/<int:codigo>", methods=["PUT"])
 def modificar_libro(codigo):
     nuevo_titulo = request.form.get("titulo")
     nuevo_autor = request.form.get("autor")
-    nueva_cantidad = request.form.get("cantidad")
-    nuevo_genero = request.form.get("genero")
-    imagen = request.files['imagen']
+    nueva_editorial = request.form.get("editorial")
+    nueva_imagen = request.files['imagen']
+    nuevo_enlace = request.form.get("enlace")
 
-    nombre_imagen = secure_filename(imagen.filename)
+    nombre_imagen = secure_filename(nueva_imagen.filename)
     nombre_base, extension = os.path.splitext(nombre_imagen)
     nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
 
@@ -161,15 +154,13 @@ def modificar_libro(codigo):
 
         if os.path.exists(ruta_imagen):
             os.remove(ruta_imagen)
-
-    if biblioteca.modificar_libro(codigo, nuevo_titulo, nuevo_autor, nueva_cantidad, nombre_imagen, nuevo_genero):
-        imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
+    
+    if biblioteca.modificar_libro(codigo, nuevo_titulo, nuevo_autor, nueva_editorial, nombre_imagen, nuevo_enlace):
+        nueva_imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
         return jsonify({"mensaje": "Libro modificado"}), 200
     else:
         return jsonify({"mensaje": "Libro no encontrado"}), 403
 
-
-#--------------------------------------------------------------------
 @app.route("/libros/<int:codigo>", methods=["DELETE"])
 def eliminar_libro(codigo):
     libro = biblioteca.consultar_libro(codigo)
@@ -183,9 +174,4 @@ def eliminar_libro(codigo):
     if biblioteca.eliminar_libro(codigo):
         return jsonify({"mensaje": "Libro eliminado"}), 200
     else:
-        return jsonify({"mensaje": "Error al eliminar el libro"}), 500
-
-
-#--------------------------------------------------------------------
-if __name__ == "__main__":
-    app.run(debug=True)
+        return jsonify({"mensaje": "Libro no encontrado"}), 404

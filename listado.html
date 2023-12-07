@@ -39,14 +39,15 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Título</th>
+                        <th>Titulo</th>
                         <th>Autor</th>
-                        <th>Cantidad</th>
+                        <th>Enlace</th>
                         <th>Imagen</th>
-                        <th>Género</th>
+                        <th>Enlace</th>
+
                     </tr>
                 </thead>
-                <tbody id="tablaLibros"> </tbody>
+                <tbody id="tablalibros"> </tbody>
             </table>
 
             <br>
@@ -76,7 +77,7 @@
         const URL = "http://127.0.0.1:5000/";
 
         // Realizamos la solicitud GET al servidor para obtener todos los libros
-        fetch(URL + 'libros')
+        fetch(URL + 'libro')
             .then(function (response) {
                 if (response.ok) {
                     return response.json();
@@ -87,21 +88,21 @@
                 }
             })
             .then(function (data) {
-                let tablaLibros = document.getElementById('tablaLibros');
+                let tablalibros = document.getElementById('tablalibros');
 
                 // Iteramos sobre los libros y agregamos filas a la tabla
                 for (let libro of data) {
                     let fila = document.createElement('tr');
                     fila.innerHTML = '<td>' + libro.codigo + '</td>' +
                         '<td>' + libro.titulo + '</td>' +
-                        '<td>' + libro.autor + '</td>' +
-                        '<td align="right">' + libro.cantidad + '</td>' +
+                        '<td align="right">' + libro.autor + '</td>' +
+                        '<td align="right">' + libro.editorial  + '</td>' +
                         // Mostrar miniatura de la imagen
-                        '<td><img src="./static/imagenes/' + libro.imagen_url + '" alt="Imagen del libro" style="width: 100px;"></td>' +
-                        '<td>' + libro.genero + '</td>';
+                        '<td><img src=./static/imagenes/' + libro.imagen_url + ' alt="Imagen del producto" style="width: 100px;"></td>' +
+                        '<td align="right">' + libro.enlace + '</td>';
 
-                    // Una vez que se crea la fila con el contenido del libro, se agrega a la tabla utilizando el método appendChild del elemento tablaLibros.
-                    tablaLibros.appendChild(fila);
+                    //Una vez que se crea la fila con el contenido del libro, se agrega a la tabla utilizando el método appendChild del elementotablaProductos.
+                    tablalibros.appendChild(fila);
                 }
             })
             .catch(function (error) {

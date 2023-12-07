@@ -42,21 +42,22 @@
         <thead>
             <tr>
                 <th>Código</th>
-                <th>Título</th>
+                <th>Titulo</th>
                 <th>Autor</th>
-                <th>Cantidad</th>
+                <th>Editorial</th>
                 <th>Imagen</th>
-                <th>Género</th>
+                <th>Enlace</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="libro in libros">
-                <td>{{ libro.codigo }}</td>
-                <td>{{ libro.titulo }}</td>
-                <td>{{ libro.autor }}</td>
-                <td>{{ libro.cantidad }}</td>
-                <td>{{ libro.genero }}</td>
-                <td><button @click="eliminarLibro(libro.codigo)">Eliminar</button></td>
+                <td>{{ libros.codigo }}</td>
+                <td>{{ libros.titulo }}</td>
+                <td>{{ libros.autor }}</td>
+                <td>{{ libros.editorial }}</td>
+                <td>{{ libros.imagen }}</td>
+                <td>{{ libros.enlace }}</td>
+                <td><button @click="eliminarlibro(libro.codigo)">Eliminar</button></td>
             </tr>
         </tbody>
     </table>
@@ -82,51 +83,55 @@
       </footer>
       <script src="./js/scripts.js"></script>
 
-      <script src="https://unpkg.com/vue@next"></script>
-      <script>
-          const URL = "http://127.0.0.1:5000/"
-  
-          const app = Vue.createApp({
-              data() {
-                  return {
-                      libros: []
-                  }
-              },
-              methods: {
-                  obtenerLibros() {
-                      fetch(URL + 'libros')
-                          .then(response => {
-                              if (response.ok) { return response.json(); }
-                          })
-                          .then(data => {
-                              this.libros = data;
-                          })
-                          .catch(error => {
-                              console.log('Error:', error);
-                              alert('Error al obtener los libros.');
-                          });
-                  },
-                  eliminarLibro(codigo) {
-                      if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
-                          fetch(URL + `libros/${codigo}`, { method: 'DELETE' })
-                              .then(response => {
-                                  if (response.ok) {
-                                      this.libros = this.libros.filter(libro => libro.codigo !== codigo);
-                                      alert('Libro eliminado correctamente.');
-                                  }
-                              })
-                              .catch(error => {
-                                  alert(error.message);
-                              });
-                      }
-                  }
-              },
-              mounted() {
-                  this.obtenerLibros();
-              }
-          });
-  
-          app.mount('body');
-      </script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const URL = "http://127.0.0.1:5000/"
+
+        const app = Vue.createApp({
+            data() {
+                return {
+                    libros: []
+                }
+            },
+            methods: {
+                obtenerlibros() {
+                    // Obtenemos el contenido del inventario
+                    fetch(URL + 'libros')
+                        .then(response => {
+                             // Parseamos la respuesta JSON 
+                            if (response.ok) { return response.json();}
+                        })
+                        .then(data => {
+                            // El código Vue itera este elemento para generar la tabla
+                            this.libros = data;
+                        })
+                        .catch(error => {
+                            console.log('Error:', error);
+                            alert('Error al obtener los libros.');
+                        });
+                },
+                eliminarlibro(codigo) {
+                    if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
+                        fetch(URL + `libros/${codigo}`, { method: 'DELETE' })
+                            .then(response => {
+                                if (response.ok) {
+                                    this.libro = this.libro.filter(libros => libros.codigo !== codigo);
+                                    alert('Libro eliminado correctamente.');
+                                }
+                            })
+                            .catch(error => {
+                                alert(error.message);
+                            });
+                    }
+                }
+            },
+            mounted() {
+                //Al cargar la página, obtenemos la lista de
+                this.obtenerLibros();
+            }
+        });
+
+        app.mount('body');
+    </script>
 </body>
 </html>
