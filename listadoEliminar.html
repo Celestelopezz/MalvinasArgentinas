@@ -34,7 +34,7 @@
       <main class="biblioteca">
 
         <h1>Biblioteca Digital</h1>
-        <h3>Baja del Catálogo</h3>
+        <h3>Baja de Libros</h3>
         <br><br>
 
     <table class="contenedor-centrado">
@@ -42,19 +42,21 @@
         <thead>
             <tr>
                 <th>Código</th>
-                <th>Descripción</th>
+                <th>Título</th>
+                <th>Autor</th>
                 <th>Cantidad</th>
-                <th align="right">Precio</th>
-                <th>Acciones</th>
+                <th>Imagen</th>
+                <th>Género</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="producto in productos">
-                <td>{{ producto.codigo }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.cantidad }}</td>
-                <td align="right">{{ producto.precio }}</td>
-                <td><button @click="eliminarProducto(producto.codigo)">Eliminar</button></td>
+            <tr v-for="libro in libros">
+                <td>{{ libro.codigo }}</td>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.autor }}</td>
+                <td>{{ libro.cantidad }}</td>
+                <td>{{ libro.genero }}</td>
+                <td><button @click="eliminarLibro(libro.codigo)">Eliminar</button></td>
             </tr>
         </tbody>
     </table>
@@ -80,55 +82,51 @@
       </footer>
       <script src="./js/scripts.js"></script>
 
-    <script src="https://unpkg.com/vue@next"></script>
-    <script>
-        const URL = "http://127.0.0.1:5000/"
-
-        const app = Vue.createApp({
-            data() {
-                return {
-                    productos: []
-                }
-            },
-            methods: {
-                obtenerProductos() {
-                    // Obtenemos el contenido del inventario
-                    fetch(URL + 'productos')
-                        .then(response => {
-                             // Parseamos la respuesta JSON 
-                            if (response.ok) { return response.json();}
-                        })
-                        .then(data => {
-                            // El código Vue itera este elemento para generar la tabla
-                            this.productos = data;
-                        })
-                        .catch(error => {
-                            console.log('Error:', error);
-                            alert('Error al obtener los productos.');
-                        });
-                },
-                eliminarProducto(codigo) {
-                    if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-                        fetch(URL + `productos/${codigo}`, { method: 'DELETE' })
-                            .then(response => {
-                                if (response.ok) {
-                                    this.productos = this.productos.filter(producto => producto.codigo !== codigo);
-                                    alert('Producto eliminado correctamente.');
-                                }
-                            })
-                            .catch(error => {
-                                alert(error.message);
-                            });
-                    }
-                }
-            },
-            mounted() {
-                //Al cargar la página, obtenemos la lista de productos
-                this.obtenerProductos();
-            }
-        });
-
-        app.mount('body');
-    </script>
+      <script src="https://unpkg.com/vue@next"></script>
+      <script>
+          const URL = "http://127.0.0.1:5000/"
+  
+          const app = Vue.createApp({
+              data() {
+                  return {
+                      libros: []
+                  }
+              },
+              methods: {
+                  obtenerLibros() {
+                      fetch(URL + 'libros')
+                          .then(response => {
+                              if (response.ok) { return response.json(); }
+                          })
+                          .then(data => {
+                              this.libros = data;
+                          })
+                          .catch(error => {
+                              console.log('Error:', error);
+                              alert('Error al obtener los libros.');
+                          });
+                  },
+                  eliminarLibro(codigo) {
+                      if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
+                          fetch(URL + `libros/${codigo}`, { method: 'DELETE' })
+                              .then(response => {
+                                  if (response.ok) {
+                                      this.libros = this.libros.filter(libro => libro.codigo !== codigo);
+                                      alert('Libro eliminado correctamente.');
+                                  }
+                              })
+                              .catch(error => {
+                                  alert(error.message);
+                              });
+                      }
+                  }
+              },
+              mounted() {
+                  this.obtenerLibros();
+              }
+          });
+  
+          app.mount('body');
+      </script>
 </body>
 </html>
