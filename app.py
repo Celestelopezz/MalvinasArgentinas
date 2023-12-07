@@ -31,9 +31,6 @@ class BibliotecaLibros:  # Cambié el nombre de la clase a BibliotecaLibros
             codigo INT,
             titulo VARCHAR(255) NOT NULL,
             autor VARCHAR(255) NOT NULL,
-            cantidad INT NOT NULL,
-            titulo VARCHAR(255) NOT NULL,
-            autor VARCHAR(255) NOT NULL,
             editorial VARCHAR(255) NOT NULL,
             imagen_url VARCHAR(255),
             enlace VARCHAR(255))''')

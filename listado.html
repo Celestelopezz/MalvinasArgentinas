@@ -41,10 +41,9 @@
                         <th>Código</th>
                         <th>Titulo</th>
                         <th>Autor</th>
-                        <th>Enlace</th>
+                        <th>Editorial</th>
                         <th>Imagen</th>
                         <th>Enlace</th>
-
                     </tr>
                 </thead>
                 <tbody id="tablalibros"> </tbody>
@@ -74,7 +73,7 @@
         Derechos reservados - 2023
     </footer>
     <script>
-        const URL = "http://127.0.0.1:5000/";
+        const URL = "http://acmdq.mysql.pythonanywhere-services.com/";
 
         // Realizamos la solicitud GET al servidor para obtener todos los libros
         fetch(URL + 'libro')
