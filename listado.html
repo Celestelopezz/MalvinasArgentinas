@@ -39,15 +39,15 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th align="right">Precio</th>
+                        <th>Titulo</th>
+                        <th>Autor</th>
+                        <th>Enlace</th>
                         <th>Imagen</th>
-                        <th align="right">Proveedor</th>
+                        <th>Enlace</th>
 
                     </tr>
                 </thead>
-                <tbody id="tablaProductos"> </tbody>
+                <tbody id="tablalibros"> </tbody>
             </table>
 
             <br>
@@ -76,8 +76,8 @@
     <script>
         const URL = "http://127.0.0.1:5000/"
 
-        // Realizamos la solicitud GET al servidor para obtener todos los productos
-        fetch(URL + 'productos')
+        // Realizamos la solicitud GET al servidor para obtener todos los libros
+        fetch(URL + 'libro')
             .then(function (response) {
                 if (response.ok) {
                     return response.json();
@@ -88,26 +88,26 @@
                 }
             })
             .then(function (data) {
-                let tablaProductos = document.getElementById('tablaProductos');
+                let tablalibros = document.getElementById('tablalibros');
 
-                // Iteramos sobre los productos y agregamos filas a la tabla
-                for (let producto of data) {
+                // Iteramos sobre los libros y agregamos filas a la tabla
+                for (let libro of data) {
                     let fila = document.createElement('tr');
-                    fila.innerHTML = '<td>' + producto.codigo + '</td>' +
-                        '<td>' + producto.descripcion + '</td>' +
-                        '<td align="right">' + producto.cantidad + '</td>' +
-                        '<td align="right">' + producto.precio + '</td>' +
+                    fila.innerHTML = '<td>' + libro.codigo + '</td>' +
+                        '<td>' + libro.titulo + '</td>' +
+                        '<td align="right">' + libro.autor + '</td>' +
+                        '<td align="right">' + libro.editorial  + '</td>' +
                         // Mostrar miniatura de la imagen
-                        '<td><img src=./static/imagenes/' + producto.imagen_url + ' alt="Imagen del producto" style="width: 100px;"></td>' +
-                        '<td align="right">' + producto.proveedor + '</td>';
+                        '<td><img src=./static/imagenes/' + libro.imagen_url + ' alt="Imagen del producto" style="width: 100px;"></td>' +
+                        '<td align="right">' + libro.enlace + '</td>';
 
-                    //Una vez que se crea la fila con el contenido del producto, se agrega a la tabla utilizando el método appendChild del elementotablaProductos.
-                    tablaProductos.appendChild(fila);
+                    //Una vez que se crea la fila con el contenido del libro, se agrega a la tabla utilizando el método appendChild del elementotablaProductos.
+                    tablalibros.appendChild(fila);
                 }
             })
             .catch(function (error) {
                 // Código para manejar errores
-                alert('Error al obtener los productos.');
+                alert('Error al obtener los libros.');
             });
     </script>
 </body>

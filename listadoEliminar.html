@@ -42,19 +42,22 @@
         <thead>
             <tr>
                 <th>Código</th>
-                <th>Descripción</th>
-                <th>Cantidad</th>
-                <th align="right">Precio</th>
-                <th>Acciones</th>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Editorial</th>
+                <th>Imagen</th>
+                <th>Enlace</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="producto in productos">
-                <td>{{ producto.codigo }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.cantidad }}</td>
-                <td align="right">{{ producto.precio }}</td>
-                <td><button @click="eliminarProducto(producto.codigo)">Eliminar</button></td>
+            <tr v-for="libro in libros">
+                <td>{{ libros.codigo }}</td>
+                <td>{{ libros.titulo }}</td>
+                <td>{{ libros.autor }}</td>
+                <td>{{ libros.editorial }}</td>
+                <td>{{ libros.imagen }}</td>
+                <td>{{ libros.enlace }}</td>
+                <td><button @click="eliminarlibro(libro.codigo)">Eliminar</button></td>
             </tr>
         </tbody>
     </table>
@@ -87,33 +90,33 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    productos: []
+                    libros: []
                 }
             },
             methods: {
-                obtenerProductos() {
+                obtenerlibros() {
                     // Obtenemos el contenido del inventario
-                    fetch(URL + 'productos')
+                    fetch(URL + 'libros')
                         .then(response => {
                              // Parseamos la respuesta JSON 
                             if (response.ok) { return response.json();}
                         })
                         .then(data => {
                             // El código Vue itera este elemento para generar la tabla
-                            this.productos = data;
+                            this.libros = data;
                         })
                         .catch(error => {
                             console.log('Error:', error);
-                            alert('Error al obtener los productos.');
+                            alert('Error al obtener los libros.');
                         });
                 },
-                eliminarProducto(codigo) {
-                    if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-                        fetch(URL + `productos/${codigo}`, { method: 'DELETE' })
+                eliminarlibro(codigo) {
+                    if (confirm('¿Estás seguro de que quieres eliminar este libro?')) {
+                        fetch(URL + `libros/${codigo}`, { method: 'DELETE' })
                             .then(response => {
                                 if (response.ok) {
-                                    this.productos = this.productos.filter(producto => producto.codigo !== codigo);
-                                    alert('Producto eliminado correctamente.');
+                                    this.libro = this.libro.filter(libros => libros.codigo !== codigo);
+                                    alert('Libro eliminado correctamente.');
                                 }
                             })
                             .catch(error => {
@@ -123,8 +126,8 @@
                 }
             },
             mounted() {
-                //Al cargar la página, obtenemos la lista de productos
-                this.obtenerProductos();
+                //Al cargar la página, obtenemos la lista de
+                this.obtenerLibros();
             }
         });
 
