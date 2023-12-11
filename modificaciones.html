@@ -57,24 +57,24 @@
                     <input type="text" step="0.01" id="editorialModificar" v-model="editorial" required><br>
 
                     <!-- Imagen actual del libro -->
-                    <img v-if="imagen_url && !imagenSeleccionada" :src="'./static/imagenes/' + imagen_url"
+                    <img v-if="imagen_url && !imagenSeleccionada" :src="'https://www.pythonanywhere.com/user/acmdq/files/home/acmdq/mysite/static/imagenes/' + imagen_url"
                         alt="Imagen del Libro" style="max-width: 200px;">
 
-                        <!-- Vista previa de la nueva imagen seleccionada -->
-                        <img v-if="imagenSeleccionada" :src="imagenUrlTemp" alt="Vista previa de la nueva imagen"
+                    <!-- Vista previa de la nueva imagen seleccionada -->
+                    <img v-if="imagenSeleccionada" :src="imagenUrlTemp" alt="Vista previa de la nueva imagen"
                             style="max-width: 200px;">
 
                     <!-- Input para nueva imagen -->
                     <label for="nuevaImagen">Nueva Imagen:</label>
-                    <input type="file" id="nuevaImagen" @change="seleccionarImagen"><br>
+                    <input type="file" id="nuevaImagen" @change="seleccionarImagen" class="nuevaImagen"><br>
 
-                    <label for="enlace">enlace:</label>
-                    <input type="file" id="enlace @change="enlace"><br>
+                    <label for="enlaceModificar">Enlace:</label>
+                    <input type="text" id="enlaceModificar" v-model="enlace" required><br>
 
 
-                        <button type="submit">Guardar Cambios</button>
-                        <a href="modificaciones.html">Cancelar</a>
-                    </form>
+                    <button type="submit">Guardar Cambios</button>
+                    <a href="modificaciones.html">Cancelar</a>
+                </form>
             </div>
         </div>
     </main>
@@ -95,10 +95,12 @@
         <br>
         Derechos reservados - 2023
     </footer>
-    <script src="./js/scripts.js"></script>
+    
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="./js/scripts.js"></script>
+
     <script>
-        const URL = "http://127.0.0.1:5000/";
+        const URL = "https://acmdq.pythonanywhere.com/";
 
         const app = Vue.createApp({
 
@@ -110,16 +112,16 @@
                     autor: '',
                     editorial: '',
                     imagen_url: '',
+                    enlace: '',
                     imagenSeleccionada: null,
                     imagenUrlTemp: null,
-                    enlace: '',
                     mostrarDatosLibro: false,
                 };
             },
             methods: {
                 //Se ejecuta cuando se envía el formulario de consulta. En este método, utilizamos fetch para realizar una solicitud GET a la API y obtener los datos del libro correspondiente al código ingresado.
-                obtenerLibro() {
-                    fetch(URL + 'Libros/' + this.codigo)
+                obtenerLibros() {
+                    fetch(URL + 'libros/' + this.codigo)
 
                         //Verificamos si la respuesta de la solicitud es exitosa (código de respuesta 200-299). Si es así, utilizamos response.json() para parsear la respuesta en formato JSON.
                         .then(response => {
@@ -135,13 +137,15 @@
                             this.autor = data.autor;
                             this.editorial = data.editorial;
                             this.imagen_url = data.imagen_url;
-                            this.enlace_url = data.enlace_url;
+                            this.enlace = data.enlace;
                             this.mostrarDatosLibro = true;
                         })
                         .catch(error => {
                             alert('Código no encontrado.');
                         });
                 },
+
+                //Se activa cuando el usuario selecciona una imagen para cargar.
                 seleccionarImagen(event) {
                     const file = event.target.files[0];
                     this.imagenSeleccionada = file;
@@ -153,7 +157,6 @@
                     formData.append('titulo', this.titulo);
                     formData.append('autor', this.autor);
                     formData.append('editorial', this.editorial);
-                    formData.append('imagen', this.imagen);
                     formData.append('enlace', this.enlace);
 
 
@@ -162,7 +165,7 @@
                     }
 
                     //Utilizamos fetch para realizar una solicitud PUT a la API y guardar los cambios.
-                    fetch(URL + 'libro/' + this.codigo, {
+                    fetch(URL + 'libros/' + this.codigo, {
                         method: 'PUT',
                         body: formData,
                     })
@@ -175,7 +178,7 @@
                             }
                         })
                         .then(data => {
-                            alert('libro actualizado correctamente.');
+                            alert('Libro actualizado correctamente.');
                             this.limpiarFormulario();
                         })
                         .catch(error => {
@@ -191,7 +194,7 @@
                     this.imagen_url = '';
                     this.imagenSeleccionada = null;
                     this.imagenUrlTemp = null; 
-                    this.enlace_url = '';
+                    this.enlace = '';
                     this.mostrarDatosLibro = false;
                 }
             },

@@ -1,5 +1,5 @@
 # Instalar con pip install Flask
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import mysql.connector
 from werkzeug.utils import secure_filename
@@ -88,9 +88,9 @@ class BibliotecaLibros:  # Cambié el nombre de la clase a BibliotecaLibros
             print("Libro no encontrado.")
 
 
-biblioteca = BibliotecaLibros(host='localhost', user='root', password='root', database='miapp')
+biblioteca = BibliotecaLibros(host='acmdq.mysql.pythonanywhere-services.com', user='acmdq', password='comision23521', database='acmdq$miapp')
 
-RUTA_DESTINO = './static/imagenes/'
+RUTA_DESTINO = '/home/acmdq/mysite/static/imagenes'
 
 @app.route("/libros", methods=["GET"])
 def listar_libros():
@@ -107,7 +107,15 @@ def mostrar_libro(codigo):
         return "Libro no encontrado", 404
 
 
+#--------------------------------------------------------------------
+# Agregar un producto
+#--------------------------------------------------------------------
+
 @app.route("/libros", methods=["POST"])
+
+#La ruta Flask `/productos` con el método HTTP POST está diseñada para permitir la adición de un nuevo producto a la base de datos.
+#La función agregar_producto se asocia con esta URL y es llamada cuando se hace una solicitud POST a /productos.
+
 def agregar_libro():
     codigo = request.form['codigo']
     titulo = request.form['titulo']
@@ -137,38 +145,68 @@ def modificar_libro(codigo):
     nuevo_titulo = request.form.get("titulo")
     nuevo_autor = request.form.get("autor")
     nueva_editorial = request.form.get("editorial")
-    nueva_imagen = request.files['imagen']
+    imagen = request.files['imagen']
     nuevo_enlace = request.form.get("enlace")
 
-    nombre_imagen = secure_filename(nueva_imagen.filename)
+    # Procesamiento de la imagen
+    nombre_imagen = secure_filename(imagen.filename)
     nombre_base, extension = os.path.splitext(nombre_imagen)
     nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
 
+    # Busco el producto guardado
     libro = biblioteca.consultar_libro(codigo)
     if libro:
         imagen_vieja = libro["imagen_url"]
+        # Armo la ruta a la imagen
         ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)
 
+        # Y si existe la borro.
         if os.path.exists(ruta_imagen):
             os.remove(ruta_imagen)
-    
+
+    # Se llama al método modificar_producto pasando el codigo del producto y los nuevos datos.
     if biblioteca.modificar_libro(codigo, nuevo_titulo, nuevo_autor, nueva_editorial, nombre_imagen, nuevo_enlace):
-        nueva_imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
+        imagen.save(os.path.join(RUTA_DESTINO, nombre_imagen))
+        
+        #Si la actualización es exitosa, se devuelve una respuesta JSON con un mensaje de éxito y un código de estado HTTP 200 (OK).
         return jsonify({"mensaje": "Libro modificado"}), 200
     else:
+        #Si el producto no se encuentra (por ejemplo, si no hay ningún producto con el código dado), se devuelve un mensaje de error con un código de estado HTTP 404 (No Encontrado).
         return jsonify({"mensaje": "Libro no encontrado"}), 403
 
+
+
+
+
+#--------------------------------------------------------------------
+# Eliminar un producto según su código
+#--------------------------------------------------------------------
+
 @app.route("/libros/<int:codigo>", methods=["DELETE"])
+#La ruta Flask /productos/<int:codigo> con el método HTTP DELETE está diseñada para eliminar un producto específico de la base de datos, utilizando su código como identificador.
+#La función eliminar_producto se asocia con esta URL y es llamada cuando se realiza una solicitud DELETE a /productos/ seguido de un número (el código del producto).
+
 def eliminar_libro(codigo):
+    # Busco el producto en la base de datos
     libro = biblioteca.consultar_libro(codigo)
-    if libro:
+    if libro:  # Si el producto existe, verifica si hay una imagen asociada en el servidor.
         imagen_vieja = libro["imagen_url"]
+        # Armo la ruta a la imagen
         ruta_imagen = os.path.join(RUTA_DESTINO, imagen_vieja)
 
+        # Y si existe, la elimina del sistema de archivos.
         if os.path.exists(ruta_imagen):
             os.remove(ruta_imagen)
 
-    if biblioteca.eliminar_libro(codigo):
-        return jsonify({"mensaje": "Libro eliminado"}), 200
+        # Luego, elimina el producto del catálogo
+        if biblioteca.eliminar_libro(codigo):
+            return jsonify({"mensaje": "Libro eliminado"}), 200
+        else:
+            #Si ocurre un error durante la eliminación (por ejemplo, si el producto no se puede eliminar de la base de datos por alguna razón), se devuelve un mensaje de error con un código de estado HTTP 500 (Error Interno del Servidor).
+            return jsonify({"mensaje": "Error al eliminar el producto"}), 500
     else:
         return jsonify({"mensaje": "Libro no encontrado"}), 404
+
+#--------------------------------------------------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
